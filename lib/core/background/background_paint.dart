@@ -10,7 +10,7 @@ class BackgroundPaint extends CustomPainter {
     final onePorcentOfHeight = size.height / 100;
     final onePorcentOfWidth = size.width / 100;
 
-    var paint = Paint()
+    Paint topPaint = Paint()
       ..color = const Color.fromARGB(255, 255, 73, 1)
       ..shader = const LinearGradient(colors: [
         Color.fromARGB(255, 250, 148, 108),
@@ -27,17 +27,17 @@ class BackgroundPaint extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.square;
 
-    var paint4 = Paint()
+    Paint topPaintBorder = Paint()
       ..color = const Color.fromARGB(43, 255, 73, 1)
       ..strokeWidth = 20
       ..style = PaintingStyle.stroke;
 
-    var paint2 = Paint()
+    Paint bottomPaintBorder = Paint()
       ..color = const Color.fromARGB(151, 176, 233, 255)
       ..strokeWidth = 20
       ..style = PaintingStyle.stroke;
 
-    var paint3 = Paint()
+    Paint bottomPaint = Paint()
       ..color = const Color.fromARGB(255, 1, 91, 209)
       ..strokeWidth = 5
       ..shader = const LinearGradient(colors: [
@@ -54,110 +54,137 @@ class BackgroundPaint extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeCap = StrokeCap.square;
 
-    var path = Path();
-    var path4 = Path();
-    var path2 = Path();
-    var path3 = Path();
+    canvas.drawPath(
+        _generateTopPathBorder(onePorcentOfHeight, onePorcentOfWidth),
+        topPaintBorder);
+    canvas.drawPath(
+        _generateTopPath(onePorcentOfHeight, onePorcentOfWidth), topPaint);
 
-    //path.moveTo(x, y)
-    path.moveTo(0, 250);
-    path.lineTo(0, 0);
-    path.lineTo(onePorcentOfWidth * 95, 0);
-    path.quadraticBezierTo(
-      onePorcentOfWidth * 95,
-      onePorcentOfHeight * 5,
-      onePorcentOfWidth * 50,
-      onePorcentOfHeight * 10,
-    );
-
-    path.quadraticBezierTo(
-      onePorcentOfWidth * 15,
-      onePorcentOfHeight * 14,
-      onePorcentOfWidth * 10,
-      onePorcentOfHeight * 30,
-    );
-
-    path.quadraticBezierTo(
-      onePorcentOfWidth * 8,
-      onePorcentOfHeight * 35,
-      onePorcentOfWidth * 0,
-      onePorcentOfHeight * 35,
-    );
-
-    path4.moveTo(onePorcentOfWidth * 95, 0);
-    path4.quadraticBezierTo(
-      onePorcentOfWidth * 95,
-      onePorcentOfHeight * 5,
-      onePorcentOfWidth * 50,
-      onePorcentOfHeight * 10,
-    );
-
-    path4.quadraticBezierTo(
-      onePorcentOfWidth * 15,
-      onePorcentOfHeight * 14,
-      onePorcentOfWidth * 10,
-      onePorcentOfHeight * 30,
-    );
-
-    path4.quadraticBezierTo(
-      onePorcentOfWidth * 8,
-      onePorcentOfHeight * 35,
-      onePorcentOfWidth * 0,
-      onePorcentOfHeight * 35,
-    );
-
-    canvas.drawPath(path4, paint4);
-    canvas.drawPath(path, paint);
-
-    path2.moveTo(size.width, onePorcentOfHeight * 69);
-    path2.lineTo(size.width, size.height);
-    path2.lineTo(onePorcentOfWidth * 10, size.height);
-    path2.quadraticBezierTo(
-      onePorcentOfWidth * 11,
-      onePorcentOfHeight * 95,
-      onePorcentOfWidth * 45,
-      onePorcentOfHeight * 93,
-    );
-    path2.quadraticBezierTo(
-      onePorcentOfWidth * 80,
-      onePorcentOfHeight * 90,
-      onePorcentOfWidth * 95,
-      onePorcentOfHeight * 72,
-    );
-    path2.quadraticBezierTo(
-      onePorcentOfWidth * 98,
-      onePorcentOfHeight * 69,
-      size.width,
-      onePorcentOfHeight * 69,
-    );
-
-    path3.moveTo(size.width, onePorcentOfHeight * 69);
-    path3.lineTo(size.width, size.height);
-    path3.lineTo(onePorcentOfWidth * 10, size.height);
-    path3.quadraticBezierTo(
-      onePorcentOfWidth * 11,
-      onePorcentOfHeight * 95,
-      onePorcentOfWidth * 45,
-      onePorcentOfHeight * 93,
-    );
-    path3.quadraticBezierTo(
-      onePorcentOfWidth * 80,
-      onePorcentOfHeight * 90,
-      onePorcentOfWidth * 95,
-      onePorcentOfHeight * 72,
-    );
-    path3.quadraticBezierTo(
-      onePorcentOfWidth * 98,
-      onePorcentOfHeight * 69,
-      size.width,
-      onePorcentOfHeight * 69,
-    );
-    canvas.drawPath(path2, paint2);
-    canvas.drawPath(path3, paint3);
+    canvas.drawPath(
+        _generateBottomPathBorder(onePorcentOfHeight, onePorcentOfWidth),
+        bottomPaintBorder);
+    canvas.drawPath(_generateBottomPath(onePorcentOfHeight, onePorcentOfWidth),
+        bottomPaint);
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+
+  Path _generateTopPath(double onePorcentOfHeight, double onePorcentOfWidth) {
+    Path topPath = Path();
+
+    topPath.moveTo(0, 250);
+    topPath.lineTo(0, 0);
+
+    topPath.lineTo(onePorcentOfWidth * 95, 0);
+    topPath.quadraticBezierTo(
+      onePorcentOfWidth * 95,
+      onePorcentOfHeight * 5,
+      onePorcentOfWidth * 50,
+      onePorcentOfHeight * 10,
+    );
+
+    topPath.quadraticBezierTo(
+      onePorcentOfWidth * 15,
+      onePorcentOfHeight * 14,
+      onePorcentOfWidth * 10,
+      onePorcentOfHeight * 30,
+    );
+
+    topPath.quadraticBezierTo(
+      onePorcentOfWidth * 8,
+      onePorcentOfHeight * 35,
+      onePorcentOfWidth * 0,
+      onePorcentOfHeight * 35,
+    );
+    return topPath;
+  }
+
+  Path _generateTopPathBorder(
+      double onePorcentOfHeight, double onePorcentOfWidth) {
+    Path topPathBorder = Path();
+
+    topPathBorder.moveTo(onePorcentOfWidth * 95, 0);
+    topPathBorder.quadraticBezierTo(
+      onePorcentOfWidth * 95,
+      onePorcentOfHeight * 5,
+      onePorcentOfWidth * 50,
+      onePorcentOfHeight * 10,
+    );
+
+    topPathBorder.quadraticBezierTo(
+      onePorcentOfWidth * 15,
+      onePorcentOfHeight * 14,
+      onePorcentOfWidth * 10,
+      onePorcentOfHeight * 30,
+    );
+
+    topPathBorder.quadraticBezierTo(
+      onePorcentOfWidth * 8,
+      onePorcentOfHeight * 35,
+      onePorcentOfWidth * 0,
+      onePorcentOfHeight * 35,
+    );
+    return topPathBorder;
+  }
+
+  Path _generateBottomPath(
+      double onePorcentOfHeight, double onePorcentOfWidth) {
+    Path bottomPath = Path();
+
+    bottomPath.moveTo(onePorcentOfWidth * 100, onePorcentOfHeight * 69);
+    bottomPath.lineTo(onePorcentOfWidth * 100, onePorcentOfHeight * 100);
+    bottomPath.lineTo(onePorcentOfWidth * 10, onePorcentOfHeight * 100);
+    bottomPath.quadraticBezierTo(
+      onePorcentOfWidth * 11,
+      onePorcentOfHeight * 95,
+      onePorcentOfWidth * 45,
+      onePorcentOfHeight * 93,
+    );
+    bottomPath.quadraticBezierTo(
+      onePorcentOfWidth * 80,
+      onePorcentOfHeight * 90,
+      onePorcentOfWidth * 95,
+      onePorcentOfHeight * 72,
+    );
+    bottomPath.quadraticBezierTo(
+      onePorcentOfWidth * 98,
+      onePorcentOfHeight * 69,
+      onePorcentOfWidth * 100,
+      onePorcentOfHeight * 69,
+    );
+
+    return bottomPath;
+  }
+
+  Path _generateBottomPathBorder(
+      double onePorcentOfHeight, double onePorcentOfWidth) {
+    Path bottomPathBorder = Path();
+
+    bottomPathBorder.moveTo(onePorcentOfWidth * 100, onePorcentOfHeight * 69);
+    bottomPathBorder.lineTo(onePorcentOfWidth * 100, onePorcentOfHeight * 100);
+    bottomPathBorder.lineTo(onePorcentOfWidth * 10, onePorcentOfHeight * 100);
+    bottomPathBorder.quadraticBezierTo(
+      onePorcentOfWidth * 11,
+      onePorcentOfHeight * 95,
+      onePorcentOfWidth * 45,
+      onePorcentOfHeight * 93,
+    );
+    bottomPathBorder.quadraticBezierTo(
+      onePorcentOfWidth * 80,
+      onePorcentOfHeight * 90,
+      onePorcentOfWidth * 95,
+      onePorcentOfHeight * 72,
+    );
+    bottomPathBorder.quadraticBezierTo(
+      onePorcentOfWidth * 98,
+      onePorcentOfHeight * 69,
+      onePorcentOfWidth * 100,
+      onePorcentOfHeight * 69,
+    );
+
+    return bottomPathBorder;
   }
 }
